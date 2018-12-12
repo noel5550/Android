@@ -22,11 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TextView textView;
-    private String message = "bonjour";
+    private String message = "bonjour NoNo :) ";
     private SmsManager smsManager;
     private Button sendBtn;
 
-    private final static String numero = "0658406185";
+    private final static String numero = "0650664099";
 
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
 
