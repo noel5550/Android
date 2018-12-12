@@ -20,13 +20,13 @@ import android.Manifest;
 public class MainActivity extends AppCompatActivity {
 
 
-    private EditText editText;
+
     private TextView textView;
-    private String message;
+    private String message = "bonjour";
     private SmsManager smsManager;
     private Button sendBtn;
 
-    private final static String numero = "0647674120";
+    private final static String numero = "0658406185";
 
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
 
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editText = (EditText) findViewById(R.id.sms_message);
+
         textView = (TextView) findViewById(R.id.text_view);
         sendBtn = (Button) findViewById(R.id.btnSend);
 
@@ -55,11 +55,10 @@ public class MainActivity extends AppCompatActivity {
     public void SendMessageClick(View view){
 
         // on récupère le message a envoyé
-        message = editText.getText().toString();
+
         smsManager = SmsManager.getDefault();
-        String scAddress = null;
-        PendingIntent sentIntent = null, deliveryIntent = null;
-        smsManager.sendTextMessage(numero, scAddress, message, sentIntent, deliveryIntent);
+
+        smsManager.sendTextMessage(numero, null, message, null, null);
     }
 
     private boolean checkPermission(String permission)
