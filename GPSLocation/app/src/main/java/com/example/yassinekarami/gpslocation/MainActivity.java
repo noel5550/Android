@@ -3,10 +3,13 @@ package com.example.yassinekarami.gpslocation;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import android.os.Debug;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -15,6 +18,10 @@ import android.widget.TextView;
 import android.location.LocationListener;
 import android.content.Intent;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,8 +29,10 @@ public class MainActivity extends AppCompatActivity {
     TextView text;
 
     LocationManager locationManager;
+    double myLatitude;
+    double myLongitude;
 
-
+    String adress = "";
     LocationListener locationListener;
 
     @Override
@@ -37,7 +46,12 @@ public class MainActivity extends AppCompatActivity {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
-                text.append("\n" + location.getAltitude() + "\n" + location.getLongitude());
+          //      text.append("\n" + location.getAltitude() + "\n" + location.getLongitude());
+                myLatitude = location.getLatitude();
+                myLongitude = location.getLongitude();
+                adress = getAdress(myLatitude,myLongitude);
+                text.setText(adress);
+
             }
 
             @Override
@@ -78,6 +92,21 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
         }
+    }
+
+    private String getAdress(double latitude, double longitude)
+    {
+        String adress ="";
+        Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+        try
+        {
+            List<Address> adresseList = geocoder.getFromLocation(latitude,longitude,1);
+            adress = adresseList.get(0).getAddressLine(0);
+        }catch(IOException e )
+        {
+            text.setText("erreur localisation");
+        };
+        return adress;
     }
 
 
